@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" fill="none">
+  <rect width="1200" height="1200" fill="#1a1a1a" rx="3"/>
+  <g opacity=".3">
+    <path fill="#fff" d="M600.709 736.5c-75.454 0-136.621-61.167-136.621-136.62 0-75.454 61.167-136.621 136.621-136.621 75.453 0 136.62 61.167 136.62 136.621 0 75.453-61.167 136.62-136.62 136.62Z"/>
+    <circle cx="600.709" cy="599.88" r="56.825" fill="#fff" fill-opacity=".1"/>
+  </g>
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="120" font-weight="bold" opacity=".5">
+    NAKSHATRA
+  </text>
+  <text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="80" opacity=".3">
+    INFRA & INTERIORS
+  </text>
+</svg>
