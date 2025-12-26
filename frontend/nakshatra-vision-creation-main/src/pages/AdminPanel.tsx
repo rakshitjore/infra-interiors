@@ -54,22 +54,60 @@ const AdminPanel = () => {
           "Supabase is not configured. Please add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to your environment."
         );
       }
-      // Note: You'll need to set up RLS policies or use service role key for admin
-      // For now, this assumes you've configured RLS to allow authenticated reads
+      
+      console.log("[AdminPanel] Fetching contacts from Supabase...");
+      console.log("[AdminPanel] Supabase client:", supabase ? "✅ Initialized" : "❌ Not initialized");
+      console.log("[AdminPanel] Supabase configured:", isSupabaseConfigured);
+      
       const { data, error } = await supabase
         .from("contacts")
         .select("*")
         .order("created_at", { ascending: false });
 
-      if (error) throw error;
+      if (error) {
+        console.error("[AdminPanel] Supabase error:", error);
+        console.error("[AdminPanel] Error code:", error.code);
+        console.error("[AdminPanel] Error message:", error.message);
+        console.error("[AdminPanel] Error details:", error.details);
+        console.error("[AdminPanel] Error hint:", error.hint);
+        throw error;
+      }
+      
+      console.log("[AdminPanel] Contacts loaded:", data?.length || 0);
+      if (data && data.length > 0) {
+        console.log("[AdminPanel] Sample contact:", data[0]);
+      }
       setContacts(data || []);
+      
+      if (data && data.length === 0) {
+        console.log("[AdminPanel] No contacts found in database. Make sure:");
+        console.log("1. You've submitted the contact form at least once");
+        console.log("2. RLS policies allow 'anon' role to SELECT from contacts table");
+      }
     } catch (error: any) {
-      console.error("Error loading contacts:", error);
-      toast({
-        title: "Error",
-        description: error.message || "Failed to load contacts.",
-        variant: "destructive",
-      });
+      console.error("[AdminPanel] Error loading contacts:", error);
+      const errorMessage = error.message || "Failed to load contacts.";
+      
+      // More specific error messages
+      if (errorMessage.includes("row-level security") || errorMessage.includes("RLS")) {
+        toast({
+          title: "RLS Policy Error",
+          description: "Row Level Security is blocking access. Please check your Supabase RLS policies allow 'anon' to SELECT from contacts table.",
+          variant: "destructive",
+        });
+      } else if (errorMessage.includes("relation") || errorMessage.includes("does not exist")) {
+        toast({
+          title: "Table Not Found",
+          description: "The 'contacts' table doesn't exist. Please run setup-supabase.sql in your Supabase SQL Editor.",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: errorMessage,
+          variant: "destructive",
+        });
+      }
     } finally {
       setLoading(false);
     }
@@ -156,10 +194,15 @@ const AdminPanel = () => {
               Manage contact form submissions
             </p>
           </div>
-          <Button onClick={handleLogout} variant="destructive">
-            <LogOut className="w-4 h-4 mr-2" />
-            Logout
-          </Button>
+          <div className="flex gap-2">
+            <Button onClick={loadContacts} variant="outline" disabled={loading}>
+              {loading ? "Refreshing..." : "Refresh"}
+            </Button>
+            <Button onClick={handleLogout} variant="destructive">
+              <LogOut className="w-4 h-4 mr-2" />
+              Logout
+            </Button>
+          </div>
         </div>
 
         {/* Stats */}
@@ -216,11 +259,24 @@ const AdminPanel = () => {
         ) : filteredContacts.length === 0 ? (
           <Card>
             <CardContent className="p-12 text-center">
-              <div className="text-gray-500 text-lg">
+              <div className="text-gray-500 text-lg mb-4">
                 {searchTerm
                   ? "No contacts found matching your search."
                   : "No contact submissions yet."}
               </div>
+              {!searchTerm && (
+                <div className="text-sm text-gray-400 space-y-2">
+                  <p>To see contacts here:</p>
+                  <ol className="list-decimal list-inside space-y-1 text-left max-w-md mx-auto">
+                    <li>Go to the main website (http://localhost:8080)</li>
+                    <li>Fill out and submit the contact form</li>
+                    <li>Come back here and click "Refresh"</li>
+                  </ol>
+                  <p className="mt-4 text-xs">
+                    💡 Check browser console (F12) for connection status
+                  </p>
+                </div>
+              )}
             </CardContent>
           </Card>
         ) : (

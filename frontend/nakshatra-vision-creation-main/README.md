@@ -1,52 +1,29 @@
-# Nakshatra INFRA & INTERIORS - Vision to Creation
+# Frontend Application
 
-Professional interior design and infrastructure services website for Nakshatra INFRA & INTERIORS.
+React + TypeScript + Vite application for Nakshatra INFRA & INTERIORS.
 
-## Features
+## Quick Start
 
-- Modern, responsive design with smooth animations
-- Portfolio showcase for completed projects
-- Contact form with backend integration
-- Service sections highlighting expertise
-- Mobile-friendly navigation
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-### Installation
-
-```sh
-# Navigate to the frontend directory
-cd frontend/nakshatra-vision-creation-main
-
+```bash
 # Install dependencies
 npm install
 
 # Start development server
 npm run dev
-```
 
-The application will be available at `http://localhost:8080`
-
-### Build for Production
-
-```sh
+# Build for production
 npm run build
 ```
 
-## What technologies are used for this project?
+## Configuration
 
-This project is built with:
+Create `.env` file with:
+```
+VITE_SUPABASE_URL=your-supabase-url
+VITE_SUPABASE_ANON_KEY=your-anon-key
+VITE_ADMIN_PASSWORD=your-admin-password
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Documentation
 
-## How can I deploy this project?
-
-The project uses Docker for deployment. See the deployment documentation in the root directory for production deployment instructions.
+See the main [README.md](../../README.md) and [DEPLOY.md](../../DEPLOY.md) in the root directory.

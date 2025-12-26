@@ -5,15 +5,15 @@ A modern React + Supabase application for an interior design company featuring a
 ## Project Structure
 
 ```
-INFRA&INTERIORS/
+infra-interiors/
 ├── frontend/
 │   └── nakshatra-vision-creation-main/
 │       ├── src/                # React source code
 │       ├── public/             # Static assets
 │       ├── package.json        # Node dependencies
 │       └── vite.config.ts      # Vite configuration
-├── SUPABASE_SETUP.md           # Supabase configuration guide
-└── SUPABASE_MIGRATION.md       # Notes on moving from Flask to Supabase
+├── DEPLOY.md                   # Deployment guide
+└── README.md                   # This file
 ```
 
 ## Features
@@ -53,9 +53,9 @@ INFRA&INTERIORS/
    ```
 
 3. **Configure Supabase**
-   - Create a Supabase project (see `SUPABASE_SETUP.md`)
-   - Copy `.env.example` to `.env` inside `frontend/nakshatra-vision-creation-main`
-   - Add your Supabase project URL and anon key
+   - Create a Supabase project at https://supabase.com
+   - Create `.env` file in `frontend/nakshatra-vision-creation-main/`
+   - Add: `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_ADMIN_PASSWORD`
 
 4. **Run the app**
    ```bash
@@ -66,7 +66,7 @@ INFRA&INTERIORS/
 
 ## Deployment
 
-**See `DEPLOYMENT.md` for detailed deployment instructions.**
+**See `DEPLOY.md` for complete deployment instructions including GoDaddy domain setup.**
 
 ### Quick Deploy Options:
 
@@ -110,7 +110,7 @@ INFRA&INTERIORS/
 
 ### Infrastructure
 - Supabase (PostgreSQL + Auth + API)
-- Docker & Docker Compose (optional for local hosting)
+- Vercel (hosting - free tier)
 
 ## Contributing
 
