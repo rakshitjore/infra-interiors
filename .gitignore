@@ -16,6 +16,7 @@ downloads/
 eggs/
 .eggs/
 lib/
+!frontend/nakshatra-vision-creation-main/src/lib/
 lib64/
 parts/
 sdist/
